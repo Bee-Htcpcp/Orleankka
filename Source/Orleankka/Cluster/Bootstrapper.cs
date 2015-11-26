@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Orleans.Providers;
 using Orleans.Runtime.Configuration;
+using Orleans;
 
 namespace Orleankka.Cluster
 {
@@ -24,7 +25,7 @@ namespace Orleankka.Cluster
     {
         Task IBootstrapper.Run(object properties)
         {
-            return Run((TProperties) properties);
+            return Run((TProperties)properties);
         }
 
         /// <summary>
@@ -54,6 +55,12 @@ namespace Orleankka.Cluster
 
             var bootstrapper = (IBootstrapper)Activator.CreateInstance(type);
             return bootstrapper.Run(Deserialize(config.Properties[PropertiesKey]));
+        }
+
+        public Task Close()
+        {
+            // nothing
+            return TaskDone.Done;
         }
 
         static object Deserialize(string s)

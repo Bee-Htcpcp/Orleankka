@@ -32,7 +32,7 @@ namespace Orleans.Internals
             Debug.Assert(grainBasedPubSubField != null);
             Debug.Assert(combinedGrainBasedAndImplicitPubSub != null);
 
-            var streamPubSub = (IStreamPubSub) grainBasedPubSubField.GetValue(runtime);
+            var streamPubSub = (IStreamPubSub)grainBasedPubSubField.GetValue(runtime);
             var wrapper = new StreamPubSubWrapper(providers, streamPubSub, matcher);
             combinedGrainBasedAndImplicitPubSub.SetValue(runtime, wrapper);
         }
@@ -58,7 +58,7 @@ namespace Orleans.Internals
             {
                 matches = (from StreamPubSubMatch m in matcher(new StreamIdentity(streamId))
                            let subId = GuidId.GetNewGuidId()
-                           select new PubSubSubscriptionState(subId, streamId, new PushExtension(m), null))
+                           select new PubSubSubscriptionState(subId, streamId, new PushExtension(m)))
                           .ToArray();
             }
 
